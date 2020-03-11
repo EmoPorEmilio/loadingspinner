@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="styles/base.css">
+    <script type="text/javascript" src="scripts/main.js"></script>
+    <script>
+
+    </script>
+</head>
+    <body style='background-color: black'>
+        <canvas id="startingCanvas" height="550px" width="550px" ></canvas>
+        <button onclick="startBtnClicked()">Start</button>
+
+        <script>
+			function startBtnClicked(){
+				LoadingSpinner.initialize({canvas: startingCanvas});
+
+				var phase = LoadingSpinner.PhaseTypeEnum.TRAINING;
+				LoadingSpinner.setPhase(phase);
+				var progress = 0; 
+			    setInterval(function(){
+			    	switch (phase){
+			    		case LoadingSpinner.PhaseTypeEnum.COLLECTING:
+					        if (progress < 1){
+					            progress += 0.10;
+					            LoadingSpinner.setProgress(progress);
+					            if (progress >= 1){
+					            	LoadingSpinner.setPhase(LoadingSpinner.PhaseTypeEnum.TRAINING);
+					            	progress = 0;
+					            }
+					        }
+			    			break;
+			    		case LoadingSpinner.PhaseTypeEnum.TRAINING:
+			    			if (progress < 1){
+					            progress += 0.05;
+					            LoadingSpinner.setProgress(progress);
+					        }
+			    			break;
+			    			
+			    	}
+			    }, 200);
+			}        	
+        </script>
+    </body>
+</html>
